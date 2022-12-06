@@ -9,8 +9,6 @@ def ler_vetor(nome):
 
 
 # Função de carregamento do conteúdo do txt para um vetor
-# Caso utilizar o arquivo songs3JSONvector.txt, alterar
-# ler_linha por ler_vetor
 def carregar_arquivo(nome):
     vet = []
     for i in ler_vetor(nome):
@@ -34,72 +32,96 @@ def separar_dados(dado):
     return novo_dado
 
 
-def traduzir_nota(nota):
-    if nota == 'A':
-        nota = '0'
-    elif nota == 'B':
-        nota = '1'
-    elif nota == 'C':
-        nota = '2'
-    elif nota == 'D':
-        nota = '3'
-    elif nota == 'E':
-        nota = '4'
-    elif nota == 'F':
-        nota = '5'
-    elif nota == 'G':
-        nota = '6'
-    return nota
-
-
-HashTable = [[] for _ in range(7)]
-
-
+# Função que percorre e exibe o hash
 def exibir_hash(tabela_hash):
-    for i in tabela_hash:
-        print(tabela_hash.index(i), end=' ')
-        for j in i:
-            print('-->', j, end=' ')
+    for nota in tabela_hash.keys():
+        print(nota, end=' ')
+        for i in tabela_hash.get(nota):
+            print('-->', i, end=' ')
         print('\n')
+    
+
+# Função para buscar quantas notas X existem
+# em um determinado arquivo Y    
+def busca_quant_notas(tabela_hash, arq, nota):
+    quant = 0
+    for i in tabela_hash.get(nota):
+        if(i.get('arq') == int(arq)):
+            quant += 1
+    return quant
+
+# Função para buscar em quais linhas existe
+# uma determinada nota 
+def busca_linhas_nota(tabela_hash, arq, nota):
+    linhas = []
+    for i in tabela_hash.get(nota):
+        if(i.get('arq') == int(arq)):
+            linhas.append(i.get('ordem'))
+    return linhas
+  
+# Função para buscar se uma determinada nota
+# existe na linha X de um arquivo Y  
+def busca_nota(tabela_hash, arq, linha, nota):
+    for i in tabela_hash.get(nota):
+        if(i.get('arq') == int(arq) and i.get('ordem') == int(linha)):
+            return True
+    return False
 
 
-def Hashing(chave):
-    return chave % len(HashTable)
+# Função que cria e retorna um hash cujas
+# chaves são as notas musicais e os valores
+# são listas (arrays)
+def criar_hash_notas():
+    tabela_hash = {
+        'A': [],
+        'B': [],
+        'C': [],
+        'D': [],
+        'E': [],
+        'F': [],
+        'G': []
+    }
+    return tabela_hash
 
 
-def inserir_hash(Tabela_Hash, chave, valor):
-    chave_hash = Hashing(chave)
-    Tabela_Hash[chave_hash].append(valor)
-
-
-def popular_hash(vet, hash):
+# Função que percorre o vetor de dados
+# e preenche o hash com o objeto contendo
+# o arquivo e a ordem quando a nota estiver
+# presente
+def popular_hash(vet, tabela_hash):
     for i in vet:
         if 'A' in i.get('notas'):
-            inserir_hash(hash, 0, separar_dados(i))
+            tabela_hash.get('A').append(separar_dados(i))
         elif 'B' in i.get('notas'):
-            inserir_hash(hash, 1, separar_dados(i))
+            tabela_hash.get('B').append(separar_dados(i))
         elif 'C' in i.get('notas'):
-            inserir_hash(hash, 2, separar_dados(i))
+            tabela_hash.get('C').append(separar_dados(i))
         elif 'D' in i.get('notas'):
-            inserir_hash(hash, 3, separar_dados(i))
+            tabela_hash.get('D').append(separar_dados(i))
         elif 'E' in i.get('notas'):
-            inserir_hash(hash, 4, separar_dados(i))
+            tabela_hash.get('E').append(separar_dados(i))
         elif 'F' in i.get('notas'):
-            inserir_hash(hash, 5, separar_dados(i))
+            tabela_hash.get('F').append(separar_dados(i))
         elif 'G' in i.get('notas'):
-            inserir_hash(hash, 6, separar_dados(i))
+            tabela_hash.get('G').append(separar_dados(i))
+
+
 
 # Função principal main
 if __name__ == '__main__':
 
     # Carrega as informações do arquivo txt de entrada para um vetor
     #vet_dados = carregar_arquivo('./entrada/songs3JSONvector.json')
-    vet_dados = carregar_arquivo('./entrada/songs3JSONvector.json')
+    vet_dados = carregar_arquivo('./entrada/teste.json')
+    
+    tabela_hash = criar_hash_notas()
     
     # Popula a tabela hash de notas musicais com o vetor
-    popular_hash(vet_dados, HashTable)
+    popular_hash(vet_dados, tabela_hash)
+    
+    exibir_hash(tabela_hash)
 
-    # Loop para funcionamento do menu
+    # Loop do menu enquanto não for digitado 0
     opcao = ''
     while opcao != '0':
         # Exibe menu para seleção de opção
@@ -117,35 +139,39 @@ if __name__ == '__main__':
             '\n. . . . . . . . . . . . . . . . . . . . . . . .'
         )
 
-        # Captura a opção
+        # Captura a opção do menu
         print('Sua opção: ', end='')
         opcao = input()
 
         # Manipula a opção selecionada
         if opcao == '1':
             print('Nota: ', end='')
-            nota = traduzir_nota(input())
+            nota = input().upper()
             print('Arquivo: ', end='')
             arquivo = input()
+            quant = busca_quant_notas(tabela_hash, arquivo, nota)
+            print('Quantidade:', quant)
         elif opcao == '2':
             print('Opção 2')
             print('Nota: ', end='')
-            nota = traduzir_nota(input())
+            nota = input().upper()
             print('Arquivo: ', end='')
             arquivo = input()
-            print('Linha: ', end='')
-            linha = input()
+            linhas = busca_linhas_nota(tabela_hash, arquivo, nota)
+            print('Quantidade:', len(linhas), '\nLinhas:', linhas)
         elif opcao == '3':
             print('Opção 2')
             print('Nota: ', end='')
-            nota = traduzir_nota(input())
+            nota = input().upper()
             print('Arquivo: ', end='')
             arquivo = input()
             print('Linha: ', end='')
             linha = input()
+            if(busca_nota(tabela_hash, arquivo, linha, nota)):
+                print('Existe!')
+            else:
+                print('Não existe!')
         elif opcao == '0':
             print('Finalizando programa...')
         else:
             print('Opção inválida!')
-
-    # print(vet_dados)
