@@ -93,17 +93,17 @@ def popular_hash(vet, tabela_hash):
     for i in vet:
         if 'A' in i.get('notas'):
             tabela_hash.get('A').append(separar_dados(i))
-        elif 'B' in i.get('notas'):
+        if 'B' in i.get('notas'):
             tabela_hash.get('B').append(separar_dados(i))
-        elif 'C' in i.get('notas'):
+        if 'C' in i.get('notas'):
             tabela_hash.get('C').append(separar_dados(i))
-        elif 'D' in i.get('notas'):
+        if 'D' in i.get('notas'):
             tabela_hash.get('D').append(separar_dados(i))
-        elif 'E' in i.get('notas'):
+        if 'E' in i.get('notas'):
             tabela_hash.get('E').append(separar_dados(i))
-        elif 'F' in i.get('notas'):
+        if 'F' in i.get('notas'):
             tabela_hash.get('F').append(separar_dados(i))
-        elif 'G' in i.get('notas'):
+        if 'G' in i.get('notas'):
             tabela_hash.get('G').append(separar_dados(i))
 
 
