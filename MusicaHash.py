@@ -191,6 +191,9 @@ if __name__ == '__main__':
     
     # Ordena os arrays de cada nota musical
     tabela_hash = ordenar_hash(tabela_hash)
+    
+    # Lista de notas musicais possíveis
+    notas = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
 
     # Loop do menu enquanto não for digitado 0
     opcao = ''
@@ -201,7 +204,7 @@ if __name__ == '__main__':
             '\n.    Bem vindo! Selecione uma opção abaixo    .'
             '\n. . . . . . . . . . . . . . . . . . . . . . . .'
             '\n. 1 - Quantas notas X em um arquivo Y?        .'
-            '\n. 2 - Quantas notas X e em quais linhas de Y? .'
+            '\n. 2 - Em quais linhas de Y há a nota X?       .'
             '\n. 3 - Nota X existe na linha Y do arquivo Z?  .'
             '\n. 4 - Exibir tabela Hash de notas musicais    .'
             '\n. 0 - Sair                                    .'
@@ -219,36 +222,49 @@ if __name__ == '__main__':
         if opcao == '1':
             print('Nota: ', end='')
             nota = input().upper()
-            print('Arquivo: ', end='')
-            arquivo = input()
-            if busca_binaria(tabela_hash.get(nota), arquivo):
-                quant = busca_quant_notas(tabela_hash, arquivo, nota)
-                print('Quantidade:', quant)
-            print('ERRO: arquivo', arquivo, 'sem correspondência com a nota', nota)
+            if nota not in notas:
+                print('ERRO: nota', nota, 'inválida!')
+            else:
+                print('Arquivo: ', end='')
+                arquivo = input()
+                if busca_binaria(tabela_hash.get(nota), arquivo):
+                    quant = busca_quant_notas(tabela_hash, arquivo, nota)
+                    print('Quantidade:', quant)
+                else:
+                    print('ERRO: arquivo', arquivo, 'sem correspondência com a nota', nota)
         elif opcao == '2':
             print('Nota: ', end='')
             nota = input().upper()
-            print('Arquivo: ', end='')
-            arquivo = input()
-            if busca_binaria(tabela_hash.get(nota), arquivo):
-                linhas = busca_linhas_nota(tabela_hash, arquivo, nota)
-            print('ERRO: arquivo', arquivo, 'sem correspondência com a nota', nota)
+            if nota not in notas:
+                print('ERRO: nota', nota, 'inválida!')
+            else:
+                print('Arquivo: ', end='')
+                arquivo = input()
+                if busca_binaria(tabela_hash.get(nota), arquivo):
+                    linhas = busca_linhas_nota(tabela_hash, arquivo, nota)
+                    print('Linhas:', linhas)
+                else:
+                    print('ERRO: arquivo', arquivo, 'sem correspondência com a nota', nota)
         elif opcao == '3':
             print('Nota: ', end='')
             nota = input().upper()
-            print('Arquivo: ', end='')
-            arquivo = input()
-            if busca_binaria(tabela_hash.get(nota), arquivo):  
-                print('Linha: ', end='')
-                linha = input()
-                inicio = time.time()
-                resultado = busca_nota(tabela_hash, arquivo, linha, nota)
-                fim = time.time()
-                if(resultado):
-                    print('Existe!')
+            if nota not in notas:
+                print('ERRO: nota', nota, 'inválida!')
+            else:
+                print('Arquivo: ', end='')
+                arquivo = input()
+                if busca_binaria(tabela_hash.get(nota), arquivo):  
+                    print('Linha: ', end='')
+                    linha = input()
+                    inicio = time.time()
+                    resultado = busca_nota(tabela_hash, arquivo, linha, nota)
+                    fim = time.time()
+                    if(resultado):
+                        print('Existe!')
+                    else:
+                        print('Não existe!')
                 else:
-                    print('Não existe!')
-            print('ERRO: arquivo', arquivo, 'sem correspondência com a nota', nota)
+                    print('ERRO: arquivo', arquivo, 'sem correspondência com a nota', nota)
         elif opcao == '4':
             exibir_hash(tabela_hash)
         elif opcao == '0':
