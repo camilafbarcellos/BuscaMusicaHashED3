@@ -70,7 +70,8 @@ def busca_nota(tabela_hash, arq, linha, nota):
 
 # Função que cria e retorna um hash cujas
 # chaves são as notas musicais e os valores
-# são listas (arrays)
+# são arrays -> tratamento de colisões
+# por lista
 def criar_hash_notas():
     tabela_hash = {
         'A': [],
@@ -112,7 +113,7 @@ if __name__ == '__main__':
 
     # Carrega as informações do arquivo txt de entrada para um vetor
     #vet_dados = carregar_arquivo('./entrada/songs3JSONvector.json')
-    vet_dados = carregar_arquivo('./entrada/teste.json')
+    vet_dados = carregar_arquivo('./entrada/songs3JSONvector.json')
     
     tabela_hash = criar_hash_notas()
     
@@ -129,10 +130,10 @@ if __name__ == '__main__':
             '\n. . . . . . . . . . . . . . . . . . . . . . . .'
             '\n.    Bem vindo! Selecione uma opção abaixo    .'
             '\n. . . . . . . . . . . . . . . . . . . . . . . .'
-            '\n. 1 -> Quantas notas X em um arquivo Y?       .'
-            '\n. 2 -> Quantas notas X em uma linha Y?        .'
-            '\n. 3 -> Nota X existe na linha Y do arquivo Z? .'
-            '\n. 0 -> Sair                                   .'
+            '\n. 1 - Quantas notas X em um arquivo Y?        .'
+            '\n. 2 - Quantas notas X e em quais linhas de Y? .'
+            '\n. 3 - Nota X existe na linha Y do arquivo Z?  .'
+            '\n. 0 - Sair                                    .'
             '\n. . . . . . . . . . . . . . . . . . . . . . . .'
             '\n.          A   B   C   D   E   F   G          .'
             '\n.      LÁ   SI   DÓ   RÉ   MI   FÁ   SOL      .'
