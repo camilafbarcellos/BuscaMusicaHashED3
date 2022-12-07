@@ -1,5 +1,4 @@
 import json
-import time
 
 
 # Função de leitura de txt como JSON em vetor
@@ -256,9 +255,7 @@ if __name__ == '__main__':
                 if busca_binaria(tabela_hash.get(nota), arquivo):  
                     print('Linha: ', end='')
                     linha = input()
-                    inicio = time.time()
                     resultado = busca_nota(tabela_hash, arquivo, linha, nota)
-                    fim = time.time()
                     if(resultado):
                         print('Existe!')
                     else:
